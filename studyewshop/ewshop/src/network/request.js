@@ -7,7 +7,7 @@ export function request(config){
     })
 
     // 请求拦截
-    instance.interceptors.request.use(config=>{
+    instance.interceptors.request.use(config => {
         // 如果有一个接口需要认证才可以访问，就在这里统一配置
 
         // 直接放行
@@ -24,4 +24,6 @@ export function request(config){
         // 如果有错误，就在这里面处理，显示错误信息
 
     })
+
+    return instance(config);
 }
