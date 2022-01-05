@@ -1,13 +1,19 @@
 <template>
   <div>
-    <h1>首页</h1>
+    <nav-bar>
+      <template v-slot:default>图书兄弟</template>
+    </nav-bar>
   </div>
 </template>
 
 <script>
-export default {
-  name: "Home"
-}
+  import NavBar from "../../components/common/navbar/NavBar";
+  export default {
+    name: "Home",
+    components: {
+      NavBar
+    }
+  }
 </script>
 
 <style scoped>
