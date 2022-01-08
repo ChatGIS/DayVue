@@ -12,50 +12,14 @@
   <recommend-view :recommends="recommends"></recommend-view>
 
   <tab-control @tabClick="tabClick" :titles="['畅销', '新书', '精选']"></tab-control>
-
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
-  {{temid}}<br>
+  <goods-list></goods-list>
 </template>
 
 <script>
   import NavBar from "../../components/common/navbar/NavBar";
   import RecommendView from "./ChildComps/RecommendView";
   import TabControl from "components/content/tabControl/TabControl";
+  import GoodsList from "components/content/goods/GoodsList";
   import {getHomeAllData} from "network/home";
   import {ref, reactive,onMounted} from "vue";
 
@@ -64,7 +28,8 @@
     components: {
       NavBar,
       RecommendView,
-      TabControl
+      TabControl,
+      GoodsList
     },
     setup() {
       // 临时变量
