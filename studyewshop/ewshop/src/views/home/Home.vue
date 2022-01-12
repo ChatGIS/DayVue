@@ -19,6 +19,7 @@
         <goods-list :goods="showGoods"></goods-list>
       </div>
     </div>
+    <back-top @bTop="bTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
@@ -27,6 +28,7 @@
   import RecommendView from "./ChildComps/RecommendView";
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "components/content/goods/GoodsList";
+  import BackTop from "components/common/backtop/BackTop";
   import {getHomeAllData, getHomeGoods} from "network/home";
   import {ref, reactive,onMounted, computed, watchEffect, nextTick} from "vue";
   import BScroll from 'better-scroll'
@@ -37,10 +39,12 @@
       NavBar,
       RecommendView,
       TabControl,
-      GoodsList
+      GoodsList,
+      BackTop
     },
     setup() {
       let isTabFixed = ref(false);
+      let isShowBackTop = ref(false);
       let banref = ref(null);
       const recommends = ref([]);
 
@@ -85,7 +89,7 @@
           console.log(banref.value.offsetHeight);
           console.log(-position.y);
 
-          isTabFixed.value = (-position.y) > banref.value.offsetHeight;
+          isShowBackTop.value = isTabFixed.value = (-position.y) > banref.value.offsetHeight;
         })
 
         //  上拉加载数据，触发pullingUp
@@ -128,13 +132,20 @@
         })
       })
 
+      // 返回顶部
+      const bTop = () => {
+        bscroll.scrollTo(0, 0, 500);
+      }
+
       return {
         recommends,
         tabClick,
         goods,
         showGoods,
         isTabFixed,
-        banref
+        isShowBackTop,
+        banref,
+        bTop
       }
     }
   }
