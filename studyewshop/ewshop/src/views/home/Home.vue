@@ -84,8 +84,19 @@
         //  上拉加载数据，触发pullingUp
         bscroll.on("pullingUp", ()=>{
           console.log("上拉加载更多");
-          console.log(document.querySelector(".content").clientHeight);
+          console.log("contentheight:" + document.querySelector(".content").clientHeight);
 
+          const page = goods[currentType.value].page + 1;
+          getHomeGoods(currentType.value, page).then(res=>{
+            goods[currentType.value].list.push(...res.data.goods.data);
+            goods[currentType.value].page += 1;
+          })
+
+          // 完成下拉，等数据请求完成，要将新数据展示出来
+          bscroll.finishPullUp();
+
+          console.log("当前类型：" + currentType.value + "，当前页：" + page);
+          // 重新计算高度
           bscroll.refresh();
         })
 
@@ -95,6 +106,11 @@
       const tabClick = (index) => {
         let type = ['sales', 'new', 'recommend'];
         currentType.value = type[index];
+
+        nextTick(()=>{
+          //  重新计算高度
+          bscroll && bscroll.refresh();
+        })
       }
 
       // 监听任何一个变量有变化
