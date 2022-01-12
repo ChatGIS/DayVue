@@ -3,14 +3,16 @@
     <nav-bar>
       <template v-slot:default>图书兄弟</template>
     </nav-bar>
-
+    <tab-control v-show="isTabFixed" @tabClick="tabClick" :titles="['畅销', '新书', '精选']"></tab-control>
     <div class="wrapper">
       <div class="content">
-        <div class="banners">
-          <img src="~assets/images/CHFLQQx675.jpg" alt="">
-        </div>
+        <div ref="banref">
+          <div class="banners">
+            <img src="~assets/images/CHFLQQx675.jpg" alt="">
+          </div>
 
-        <recommend-view :recommends="recommends"></recommend-view>
+          <recommend-view :recommends="recommends"></recommend-view>
+        </div>
 
         <tab-control @tabClick="tabClick" :titles="['畅销', '新书', '精选']"></tab-control>
 
@@ -38,6 +40,8 @@
       GoodsList
     },
     setup() {
+      let isTabFixed = ref(false);
+      let banref = ref(null);
       const recommends = ref([]);
 
       // 商品列表数据模型
@@ -78,7 +82,10 @@
 
         //  触发滚动事件
         bscroll.on('scroll', (position)=>{
-          // console.log(position.y)
+          console.log(banref.value.offsetHeight);
+          console.log(-position.y);
+
+          isTabFixed.value = (-position.y) > banref.value.offsetHeight;
         })
 
         //  上拉加载数据，触发pullingUp
@@ -125,7 +132,9 @@
         recommends,
         tabClick,
         goods,
-        showGoods
+        showGoods,
+        isTabFixed,
+        banref
       }
     }
   }
@@ -135,7 +144,6 @@
   .banners img {
     width: 100%;
     height: auto;
-    margin-top: 45px;
   }
 
   #home {
@@ -145,7 +153,7 @@
 
   .wrapper {
     position: absolute;
-    top: 20px;
+    top: 45px;
     bottom: 50px;
     left: 0;
     right: 0;
