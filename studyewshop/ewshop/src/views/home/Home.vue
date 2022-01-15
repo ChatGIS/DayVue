@@ -7,7 +7,7 @@
     <div class="wrapper">
       <div class="content">
         <div ref="banref">
-          <home-swiper style="margin-top: 45px" :banners="banners"></home-swiper>
+          <home-swiper :banners="banners"></home-swiper>
 
           <recommend-view :recommends="recommends"></recommend-view>
         </div>
