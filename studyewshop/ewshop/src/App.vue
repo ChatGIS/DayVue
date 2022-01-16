@@ -13,10 +13,15 @@
       <div>首页</div>
     </router-link>
     <router-link class="tab-bar-item" to="/category">
-      <div class="icon"><i class="iconfont icon-fenlei"></i></div>
+      <div class="icon">
+		  <i class="iconfont icon-fenlei"></i></div>
       <div>分类</div></router-link>
     <router-link class="tab-bar-item" to="/shopcart">
-      <div class="icon"><i class="iconfont icon-gouwuche"></i></div>
+      <div class="icon">
+		  <van-badge :content="1" max="9">
+		    <i class="iconfont icon-gouwuche"></i>
+		  </van-badge>
+	  </div>
       <div>购物车</div></router-link>
     <router-link class="tab-bar-item" to="/profile">
       <div class="icon"><i class="iconfont icon-yonghu"></i></div>
