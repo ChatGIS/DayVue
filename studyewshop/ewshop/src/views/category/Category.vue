@@ -6,7 +6,11 @@
 	
 	<div id="mainbox">
 		<div class="ordertab">
-			
+		  <van-tabs v-model:active="active" @click="tabClick">
+		    <van-tab title="销量"></van-tab>
+		    <van-tab title="价格"></van-tab>
+		    <van-tab title="评论"></van-tab>
+		  </van-tabs>
 		</div>
 
 		<van-sidebar class='leftmenu' v-model="activeKey">
@@ -16,13 +20,25 @@
 				:title="item.name" 
 				:name="item.name">
 				<van-sidebar-item v-for="sub in item.children" 
-				:title="sub.name" />
+				:title="sub.name"
+				 :key="sub.id"
+				 @click="getGoods(sub.id)"/>
 			  </van-collapse-item>
 			</van-collapse>
 		</van-sidebar>
 
 		<div class="goodslist">
-			
+		  <div id="content">
+		  	<van-card
+		  	  num="2"
+		  	  tag="标签"
+		  	  price="2.00"
+		  	  desc="描述信息"
+		  	  title="商品标题"
+		  	  thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+		  	  origin-price="10.00"
+		  	/>
+		  </div>
 		</div>
 	</div>
   </div>
@@ -39,9 +55,15 @@
       NavBar
     },
 	setup() {
+	  let active = ref(0);
 	  let activeKey = ref(0);
 	  let categories = ref([]);
 	  let activeName = ref('1');
+	  
+	  // 当前的排序条件
+	  let currentOrder = ref('sales');
+	  // 当前的分类id
+	  let currentCid =ref(0);
 	  
 	  onMounted(() => {
 		  getCategory().then(res => {
@@ -49,10 +71,28 @@
 		  })
 	  })
 	  
+	  // 排序选项卡
+	  const tabClick = (index) => { 
+		  let orders = ['sales', 'price', 'comments_count'];
+		  currentOrder.value = orders[index];
+		  		  console.log("---------" + orders[index])
+	  }
+	  
+	  // 通过分类获取商品
+	  const getGoods = (id) => {
+		  currentCid.value = id;
+		  console.log(currentCid.value);
+	  }
+	  
 	  return {
+		  active,
 		  activeKey,
 		  categories,
-		  activeName 
+		  activeName,
+		  currentOrder,
+		  currentCid,
+		  tabClick,
+		  getGoods
 	  }
 	}
   }
@@ -65,7 +105,6 @@
 		.ordertab {
 			flex: 1;
 			float: right;
-			width: 100%;
 			height: 50px;
 			z-index: 9px;
 			position: fixed;
@@ -88,6 +127,7 @@
 			left: 130px;
 			right: 0;
 			height: 100vh;
+			padding: 10px;
 		}
 	}
 </style>
