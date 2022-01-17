@@ -31,6 +31,7 @@
         <div id="content">
           <van-card
             v-for="item in showGoods" :key="item.id"
+            @click="itemClick(item.id)"
             :num="item.comments_count"
             :tag="item.comments_count >= 0 ? '流行' : '标签'"
             :price="item.price"
@@ -52,6 +53,7 @@
   import BackTop from "components/common/backtop/BackTop";
   import {getCategory, getCategoryGods} from "network/category";
   import {ref, reactive, onMounted, computed, watchEffect, nextTick} from 'vue';
+  import {useRouter} from "vue-router";
   import BScroll from 'better-scroll'
   
   export default {
@@ -61,6 +63,8 @@
       BackTop
     },
     setup() {
+      const router = useRouter();
+
       let isShowBackTop = ref(false);
 
       let active = ref(0);
@@ -189,7 +193,13 @@
         getGoods,
         showGoods,
         bscroll,
-        bTop
+        bTop,
+        itemClick: (id) => {
+          router.push({
+            path:'/detail',
+            query:{id}
+          })
+        }
       }
     }
   }

@@ -3,13 +3,15 @@
     <nav-bar>
       <template v-slot:default>商品详情:{{id}}</template>
     </nav-bar>
+    {{detail.id}}
   </div>
 </template>
 
 <script>
   import NavBar from "../../components/common/navbar/NavBar";
   import {useRoute} from "vue-router";
-  import {ref} from "vue";
+  import {onMounted, reactive, ref, toRefs} from "vue";
+  import {getDetail} from "network/detail";
 
   export default {
     name: "Detail",
@@ -21,8 +23,22 @@
 
       let id = ref(0);
       id.value = route.query.id;
+
+      let book = reactive({
+        detail:{},
+        like_goods:[],
+      });
+
+      onMounted(() => {
+        id.value = route.query.id;
+        getDetail(id.value).then(res => {
+          book.detail = res.data.goods;
+          book.like_goods = res.data.like_goods;
+        })
+      })
       return {
-        id
+        id,
+        ...toRefs(book)
       }
     }
   }
