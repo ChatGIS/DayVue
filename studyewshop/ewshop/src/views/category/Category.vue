@@ -30,12 +30,14 @@
 		<div class="goodslist">
 		  <div id="content">
 		  	<van-card
-		  	  num="2"
-		  	  tag="标签"
-		  	  price="2.00"
-		  	  desc="描述信息"
-		  	  title="商品标题"
-		  	  thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+          v-for="item in showGoods" :key="item.id"
+		  	  :num="item.comments_count"
+		  	  :tag="item.comments_count >= 0 ? '流行' : '标签'"
+		  	  :price="item.price"
+		  	  :desc="item.updated_at"
+		  	  :title="item.title"
+		  	  :thumb="item.cover_url"
+          :lazy-load="true"
 		  	  origin-price="10.00"
 		  	/>
 		  </div>
@@ -46,55 +48,88 @@
 
 <script>
   import NavBar from "components/common/navbar/NavBar";
-  import {getCategory} from "network/category";
-  import {ref, reactive, onMounted} from 'vue';
+  import {getCategory, getCategoryGods} from "network/category";
+  import {ref, reactive, onMounted, computed} from 'vue';
   
   export default {
     name: "Category",
     components: {
       NavBar
     },
-	setup() {
-	  let active = ref(0);
-	  let activeKey = ref(0);
-	  let categories = ref([]);
-	  let activeName = ref('1');
-	  
-	  // 当前的排序条件
-	  let currentOrder = ref('sales');
-	  // 当前的分类id
-	  let currentCid =ref(0);
-	  
-	  onMounted(() => {
-		  getCategory().then(res => {
-			  categories.value = res.data.categories;
-		  })
-	  })
-	  
-	  // 排序选项卡
-	  const tabClick = (index) => { 
-		  let orders = ['sales', 'price', 'comments_count'];
-		  currentOrder.value = orders[index];
-		  		  console.log("---------" + orders[index])
-	  }
-	  
-	  // 通过分类获取商品
-	  const getGoods = (id) => {
-		  currentCid.value = id;
-		  console.log(currentCid.value);
-	  }
-	  
-	  return {
-		  active,
-		  activeKey,
-		  categories,
-		  activeName,
-		  currentOrder,
-		  currentCid,
-		  tabClick,
-		  getGoods
-	  }
-	}
+    setup() {
+      let active = ref(0);
+      let activeKey = ref(0);
+      let categories = ref([]);
+      let activeName = ref('1');
+
+      // 当前的排序条件
+      let currentOrder = ref('sales');
+      // 当前的分类id
+      let currentCid =ref(0);
+
+      // 数据模型
+      const goods = reactive({
+        sales:{page:1, list:[]},
+        price:{page:1, list:[]},
+        comments_count:{page:1, list:[]}
+      });
+
+      const showGoods = computed(() => {
+        return goods[currentOrder.value].list;
+      })
+
+      const init = () => {
+        getCategoryGods('sales', currentCid.value).then(res => {
+          goods.sales.list = res.data.goods.data
+        })
+        getCategoryGods('price', currentCid.value).then(res => {
+          goods.price.list = res.data.goods.data
+        })
+        getCategoryGods('comments_count', currentCid.value).then(res => {
+          goods.comments_count.list = res.data.goods.data
+        })
+      }
+      
+      onMounted(() => {
+        getCategory().then(res => {
+          categories.value = res.data.categories;
+        })
+
+        init();
+      })
+
+      // 排序选项卡
+      const tabClick = (index) => {
+        let orders = ['sales', 'price', 'comments_count'];
+        currentOrder.value = orders[index];
+
+        getCategoryGods(currentOrder.value, currentCid.value).then(res => {
+          goods[currentOrder.value].list = res.data.goods.data
+        })
+
+        console.log("---------" + orders[index])
+      }
+
+      // 通过分类获取商品
+      const getGoods = (cid) => {
+        currentCid.value = cid;
+        init();
+        console.log(currentCid.value);
+      }
+
+      return {
+        active,
+        activeKey,
+        categories,
+        activeName,
+        currentOrder,
+        currentCid,
+        goods,
+        tabClick,
+        getGoods,
+        showGoods
+      }
+    }
   }
 </script>
 
