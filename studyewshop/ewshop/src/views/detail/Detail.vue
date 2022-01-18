@@ -3,12 +3,44 @@
     <nav-bar>
       <template v-slot:default>商品详情:{{id}}</template>
     </nav-bar>
-    {{detail.id}}
+
+    <van-image style="margin-top: 50px"
+        width="100%"
+        lazy-load
+        :src="detail.cover_url"
+    />
+    <van-card style="text-align: left"
+        :num="detail.stock"
+        :price="detail.price + '. 00'"
+        :desc="detail.description"
+        :title="detail.title"
+    >
+      <template #tags>
+        <van-tag plain type="danger">新书</van-tag>
+        <van-tag plain type="danger">{{detail.is_recommend == 1 ? '推荐' : '不推荐'}}</van-tag>
+      </template>
+      <template #footer>
+        <van-button type="warning">加入购物车</van-button>
+        <van-button type="danger">立即购买</van-button>
+      </template>
+    </van-card>
+
+    <van-tabs v-model:active="active">
+      <van-tab title="概述">
+        <div class="content" v-html="detail.details">
+        </div>
+      </van-tab>
+      <van-tab title="热评">内容 2</van-tab>
+      <van-tab title="相关图书">
+        <goods-list :goods="like_goods"></goods-list>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
 <script>
-  import NavBar from "../../components/common/navbar/NavBar";
+  import NavBar from "components/common/navbar/NavBar";
+  import GoodsList from "components/content/goods/GoodsList";
   import {useRoute} from "vue-router";
   import {onMounted, reactive, ref, toRefs} from "vue";
   import {getDetail} from "network/detail";
@@ -16,9 +48,11 @@
   export default {
     name: "Detail",
     components: {
-      NavBar
+      NavBar,
+      GoodsList
     },
     setup() {
+      let active = ref(0);
       const route = useRoute();
 
       let id = ref(0);
@@ -38,12 +72,15 @@
       })
       return {
         id,
-        ...toRefs(book)
+        ...toRefs(book),
+        active
       }
     }
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .content {
+    padding: 10px;
+  }
 </style>
