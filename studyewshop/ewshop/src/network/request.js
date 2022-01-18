@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Notify } from 'vant';
 
 export function request(config){
     const instance = axios.create({
@@ -22,7 +23,7 @@ export function request(config){
         // 如果需要授权才可以访问的接口，统一去login授权
 
         // 如果有错误，就在这里面处理，显示错误信息
-
+        Notify({ type: 'warning', message: error.response.data.errors[Object.keys(error.response.data.errors)[0]][0] });
     })
 
     return instance(config);

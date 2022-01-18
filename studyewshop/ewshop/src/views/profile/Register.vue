@@ -59,12 +59,16 @@
 <script>
 import NavBar from "../../components/common/navbar/NavBar";
 import {reactive, toRefs} from "vue";
+import {register} from "network/user";
+import { Notify, Toast  } from 'vant';
+import {useRouter} from "vue-router";
 export default {
   name: "Register",
   components: {
     NavBar
   },
   setup() {
+    const router = useRouter();
     const userInfo = reactive({
       name:'',
       password:'',
@@ -74,6 +78,24 @@ export default {
 
     const onSubmit = () => {
       console.log("ssss")
+      // 先验证
+      if(userInfo.password != userInfo.password_confirmation) {
+        Notify({ type: 'warning', message: '两次密码不一致' });
+      //  提交给服务器
+      } else {
+        register(userInfo).then(res => {
+          console.log(res);
+          if(res.status == '201') {
+            Toast.success('注册成功');
+            setTimeout(() => {
+              router.push({path:'/login'})
+            }, 1000)
+          }
+
+          userInfo.password = '';
+          userInfo.password_confirmation = '';
+        })
+      }
     }
 
     return {
