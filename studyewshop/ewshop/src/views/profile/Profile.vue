@@ -15,6 +15,7 @@
   import {logout} from "network/user";
   import { Toast  } from 'vant';
   import {useRouter} from "vue-router";
+  import {useStore} from 'vuex';
 
   export default {
     name: "Profile",
@@ -23,6 +24,7 @@
     },
     setup() {
       const router = useRouter();
+      const store =useStore();
 
       const tologout = () => {
         logout().then(res => {
@@ -30,6 +32,9 @@
 
           // 清除token
           window.localStorage.setItem('token', '')
+
+          store.commit('setIsLogin', false);
+
 
           setTimeout(() => {
             router.push({
