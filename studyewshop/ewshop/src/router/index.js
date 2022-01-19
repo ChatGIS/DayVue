@@ -6,6 +6,7 @@ const Detail = () => import('../views/detail/Detail');
 const Profile = () => import('../views/profile/Profile');
 const ShopCart = () => import('../views/shopcart/ShopCart');
 const Register = () => import('../views/profile/Register');
+const Login = () => import('../views/profile/Login');
 
 const routes = [
   // 默认路由
@@ -64,6 +65,14 @@ const routes = [
     component: Register,
     meta: {
       title: '图书兄弟-用户注册'
+    }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: '图书兄弟-用户登录'
     }
   },
   // {

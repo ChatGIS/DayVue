@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav-bar>
-      <template v-slot:default>用户注册</template>
+      <template v-slot:default>用户登录</template>
     </nav-bar>
 
     <div style="margin-top: 50px">
@@ -16,7 +16,7 @@
       <van-form @submit="onSubmit">
         <van-cell-group inset>
           <van-field
-              v-model="name"
+              v-model="email"
               name="用户名"
               label="用户名"
               placeholder="用户名"
@@ -30,25 +30,10 @@
               placeholder="密码"
               :rules="[{ required: true, message: '请填写密码' }]"
           />
-          <van-field
-              v-model="password_confirmation"
-              type="password"
-              name="确认密码"
-              label="确认密码"
-              placeholder="确认密码"
-              :rules="[{ required: true, message: '请填写一致密码' }]"
-          />
-          <van-field
-              v-model="email"
-              name="电子邮箱"
-              label="电子邮箱"
-              placeholder="电子邮箱"
-              :rules="[{ required: true, message: '请输入正确的电子邮箱格式' }]"
-          />
         </van-cell-group>
         <div style="margin: 16px;">
-          <div class="link-login" @click="$router.push({path:'/login'})">
-            已有账号，立即登录
+          <div class="link-login" @click="$router.push({path:'/register'})">
+            没有账号，立即注册
           </div>
           <van-button round block type="primary" color="#44b883" native-type="submit">
             提交
@@ -62,43 +47,36 @@
 <script>
 import NavBar from "../../components/common/navbar/NavBar";
 import {reactive, toRefs} from "vue";
-import {register} from "network/user";
+import {login} from "network/user";
 import { Notify, Toast  } from 'vant';
 import {useRouter} from "vue-router";
 export default {
-  name: "Register",
+  name: "Login",
   components: {
     NavBar
   },
   setup() {
     const router = useRouter();
     const userInfo = reactive({
-      name:'',
-      password:'',
-      password_confirmation:'',
-      email:''
+      email:'',
+      password:''
     })
 
     const onSubmit = () => {
-      console.log("ssss")
-      // 先验证
-      if(userInfo.password != userInfo.password_confirmation) {
-        Notify({ type: 'warning', message: '两次密码不一致' });
-      //  提交给服务器
-      } else {
-        register(userInfo).then(res => {
-          console.log(res);
-          if(res.status == '201') {
-            Toast.success('注册成功');
-            setTimeout(() => {
-              router.push({path:'/login'})
-            }, 1000)
-          }
+      login(userInfo).then(res => {
+        // 将token保存在本地window.localStorage   setItem(key, value)  getItem(key)
+        console.log(res.data.access_token);
+        window.localStorage.setItem('token', res.data.access_token)
+        // 在vuex isLogin
 
-          userInfo.password = '';
-          userInfo.password_confirmation = '';
-        })
-      }
+        Toast.success('登录成功');
+        userInfo.email = '';
+        userInfo.password = '';
+
+        setTimeout(() => {
+          router.go(-1)
+        }, 500)
+      })
     }
 
     return {
