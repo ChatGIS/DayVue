@@ -18,11 +18,12 @@
       <div>分类</div></router-link>
     <router-link class="tab-bar-item" to="/shopcart">
       <div class="icon">
-		  <van-badge :content="1" max="9">
+		  <van-badge :content="$store.state.cartCount" max="9">
 		    <i class="iconfont icon-gouwuche"></i>
 		  </van-badge>
-	  </div>
-      <div>购物车</div></router-link>
+	    </div>
+      <div>购物车</div>
+    </router-link>
     <router-link class="tab-bar-item" to="/profile">
       <div class="icon"><i class="iconfont icon-yonghu"></i></div>
       <div>我的</div>
