@@ -22,6 +22,8 @@ export default {
 <style lang="scss" scoped>
   .el-container {
     height: 100vh;
+    margin: 0px;
+    padding: 0px;
   }
 
   .el-header {
