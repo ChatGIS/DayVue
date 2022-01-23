@@ -53,7 +53,7 @@ export default {
     background-color: #d3dce6;
     color: var(--el-text-color-primary);
     text-align: center;
-    line-height: 200px;
+    //line-height: 200px;
   }
 
   .el-container:nth-child(5) .el-aside,

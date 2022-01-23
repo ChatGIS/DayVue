@@ -5,69 +5,133 @@
       :collapse="isCollapse"
       @open="handleOpen"
       @close="handleClose"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
   >
-    <el-sub-menu index="1">
+    <h3>通用后台管理系统</h3>
+    <el-menu-item :index="item.id" v-for="item in menuNoChildren" :key = 'item.id'>
+      <el-icon v-if="item.icon == 'home-filled'"><home-filled /></el-icon>
+      <el-icon v-if="item.icon == 'user'"><user/></el-icon>
+      <el-icon v-if="item.icon == 'data-analysis'"><data-analysis/></el-icon>
+      <template #title>{{item.label}}</template>
+    </el-menu-item>
+    <el-sub-menu :index="item.id" v-for="item in menuHasChildren" :key = item.id>
       <template #title>
-        <el-icon><location /></el-icon>
-        <span>Navigator One</span>
+        <el-icon><icon-menu /></el-icon>
+        <span>{{item.label}}</span>
       </template>
       <el-menu-item-group>
-        <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
+        <el-menu-item :index="subItem.path"
+                      v-for="(subItem, subIndex) in item.children"
+                      :key="subIndex">{{subItem.label}}</el-menu-item>
       </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-      </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title><span>item four</span></template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-      </el-sub-menu>
     </el-sub-menu>
-    <el-menu-item index="2">
-      <el-icon><icon-menu /></el-icon>
-      <template #title>Navigator Two</template>
-    </el-menu-item>
-    <el-menu-item index="3" disabled>
-      <el-icon><document /></el-icon>
-      <template #title>Navigator Three</template>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <el-icon><setting /></el-icon>
-      <template #title>Navigator Four</template>
-    </el-menu-item>
+
   </el-menu>
 </template>
 
 <script>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {
+  HomeFilled,
+  DataAnalysis,
   Location,
-  Document,
   Menu as IconMenu,
+  User,
   Setting,
 } from '@element-plus/icons-vue'
 
 export default {
   name: "CommonAside",
   components: {
+    HomeFilled,
+    DataAnalysis,
     Location,
-    Document,
     IconMenu,
+    User,
     Setting
   },
   setup() {
-    const isCollapse = ref(false)
+    const isCollapse = ref(false);
+    const menu = ref([]);
+    let menuNoChildren = ref([]);
+    let menuHasChildren = ref([]);
+
+    menu.value = [
+      {
+        id: '1',
+        path: '/',
+        name: 'home',
+        label: '首页',
+        icon: 'home-filled',
+        url: 'MallManage/MallManage'
+      },
+      {
+        id: '2',
+        path: '/user',
+        name: 'user',
+        label: '用户管理',
+        icon: 'user',
+        url: 'MallManage/MallManage'
+      },
+      {
+        id: '3',
+        path: '/web',
+        name: 'web',
+        label: '网站管理',
+        icon: 'data-analysis',
+        url: 'UserManage/UserManage'
+      },
+      {
+        id: '4',
+        label: '其他',
+        icon: 'location',
+        children: [
+          {
+            path: '/page1',
+            name: 'page1',
+            label: '页面1',
+            icon: 'setting',
+            url: 'Other/PageOne'
+          },
+          {
+            path: '/page2',
+            name: 'page2',
+            label: '页面2',
+            icon: 'setting',
+            url: 'Other/PageTwo'
+          }
+        ]
+      }];
+
+    menuNoChildren = computed(() => {
+      return menu.value.filter((item) => !item.children)
+    });
+    menuHasChildren = computed(() => {
+      return menu.value.filter((item) => item.children)
+    })
+
     return {
       isCollapse,
+      menu,
+      menuNoChildren,
+      menuHasChildren
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  h3 {
+    margin-top: 0px;
+    padding-top: 20px;
+    color: #FFFFFF;
+  }
+
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
+    height: 100vh;
   }
 </style>
