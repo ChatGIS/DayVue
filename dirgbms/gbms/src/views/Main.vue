@@ -2,7 +2,7 @@
     <el-container>
       <el-aside width="200px"><common-aside></common-aside></el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header><common-header></common-header></el-header>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
@@ -11,11 +11,13 @@
 <script>
 // @ is an alias to /src
 import CommonAside from "@/components/CommonAside";
+import CommonHeader from "@/components/CommonHeader";
 
 export default {
   name: 'Main',
   components: {
-    CommonAside
+    CommonAside,
+    CommonHeader
   }
 }
 </script>
@@ -27,6 +29,7 @@ export default {
   }
 
   .el-header {
+    color: #FFFFFF;
     background-color: #333;
   }
 

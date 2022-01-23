@@ -9,14 +9,17 @@
       text-color="#fff"
       active-text-color="#ffd04b"
   >
-    <h3>通用后台管理系统</h3>
-    <el-menu-item :index="item.id" v-for="item in menuNoChildren" :key = 'item.id'>
+<!--    <h3>通用后台管理系统</h3>-->
+    <el-menu-item :index="item.id" v-for="item in menuNoChildren"
+                  :key = 'item.id'
+                  @click="clickMenu(item.path)">
       <el-icon v-if="item.icon == 'home-filled'"><home-filled /></el-icon>
       <el-icon v-if="item.icon == 'user'"><user/></el-icon>
       <el-icon v-if="item.icon == 'data-analysis'"><data-analysis/></el-icon>
       <template #title>{{item.label}}</template>
     </el-menu-item>
-    <el-sub-menu :index="item.id" v-for="item in menuHasChildren" :key = item.id>
+    <el-sub-menu :index="item.id" v-for="item in menuHasChildren"
+                 :key = item.id>
       <template #title>
         <el-icon><icon-menu /></el-icon>
         <span>{{item.label}}</span>
@@ -24,7 +27,10 @@
       <el-menu-item-group>
         <el-menu-item :index="subItem.path"
                       v-for="(subItem, subIndex) in item.children"
-                      :key="subIndex">{{subItem.label}}</el-menu-item>
+                      :key="subIndex"
+                      @click="clickMenu(subItem.path)">
+          {{subItem.label}}
+        </el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
 
@@ -32,6 +38,7 @@
 </template>
 
 <script>
+import {useRouter} from "vue-router";
 import {computed, ref} from "vue";
 import {
   HomeFilled,
@@ -41,6 +48,8 @@ import {
   User,
   Setting,
 } from '@element-plus/icons-vue'
+
+
 
 export default {
   name: "CommonAside",
@@ -57,6 +66,8 @@ export default {
     const menu = ref([]);
     let menuNoChildren = ref([]);
     let menuHasChildren = ref([]);
+
+    const router = useRouter();
 
     menu.value = [
       {
@@ -112,11 +123,28 @@ export default {
       return menu.value.filter((item) => item.children)
     })
 
+    const handleOpen = (key, keyPath) => {
+      console.log(key);
+    }
+    const handleClose = (key, keyPath) => {
+      console.log(key);
+    }
+
+    const clickMenu = (path) => {
+      router.push({
+        name: path
+      })
+      console.log(path);
+    }
+
     return {
       isCollapse,
       menu,
       menuNoChildren,
-      menuHasChildren
+      menuHasChildren,
+      handleOpen,
+      handleClose,
+      clickMenu
     }
   }
 }
