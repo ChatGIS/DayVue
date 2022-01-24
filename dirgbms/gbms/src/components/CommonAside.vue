@@ -9,7 +9,7 @@
       text-color="#fff"
       active-text-color="#ffd04b"
   >
-<!--    <h3>通用后台管理系统</h3>-->
+    <h3>通用后台管理系统</h3>
     <el-menu-item :index="item.id" v-for="item in menuNoChildren"
                   :key = 'item.id'
                   @click="clickMenu(item.path)">
@@ -161,5 +161,6 @@ export default {
     width: 200px;
     min-height: 400px;
     height: 100vh;
+    border-width: 0px;
   }
 </style>
