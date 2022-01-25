@@ -1,6 +1,6 @@
 <template>
     <el-container>
-      <el-aside width="200px"><common-aside></common-aside></el-aside>
+      <common-aside></common-aside>
       <el-container>
         <el-header><common-header></common-header></el-header>
         <el-main>Main</el-main>

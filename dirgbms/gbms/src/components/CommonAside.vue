@@ -9,7 +9,8 @@
       text-color="#fff"
       active-text-color="#ffd04b"
   >
-    <h3>通用后台管理系统</h3>
+    <h3 v-show="!isCollapse">通用后台管理系统</h3>
+    <h3 v-show="isCollapse">后台</h3>
     <el-menu-item :index="item.id" v-for="item in menuNoChildren"
                   :key = 'item.id'
                   @click="clickMenu(item.path)">
@@ -47,8 +48,8 @@ import {
   Menu as IconMenu,
   User,
   Setting,
-} from '@element-plus/icons-vue'
-
+} from '@element-plus/icons-vue';
+import {useStore} from "vuex";
 
 
 export default {
@@ -62,7 +63,8 @@ export default {
     Setting
   },
   setup() {
-    const isCollapse = ref(false);
+    const store = useStore();
+    let isCollapse = ref(false);
     const menu = ref([]);
     let menuNoChildren = ref([]);
     let menuHasChildren = ref([]);
@@ -122,6 +124,9 @@ export default {
     menuHasChildren = computed(() => {
       return menu.value.filter((item) => item.children)
     })
+    isCollapse = computed(() => {
+      return store.state.tab.isCollapse;
+    })
 
     const handleOpen = (key, keyPath) => {
       console.log(key);
@@ -136,6 +141,8 @@ export default {
       })
       console.log(path);
     }
+
+
 
     return {
       isCollapse,
@@ -160,7 +167,10 @@ export default {
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
-    height: 100vh;
+  }
+
+  .el-menu-vertical-demo {
     border-width: 0px;
+    height: 100vh;
   }
 </style>

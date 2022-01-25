@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="l-content">
-      <el-button plain>
+      <el-button plain @click="handleMenu">
         <el-icon size="mini">
           <icon-menu />
         </el-icon>
@@ -30,6 +30,7 @@ import {
   Search,
   Menu as IconMenu,
 } from '@element-plus/icons-vue'
+import {useStore} from "vuex";
 
 export default {
   name: "CommonHeader",
@@ -37,6 +38,15 @@ export default {
     Edit,
     Search,
     IconMenu
+  },
+  setup() {
+    const store = useStore();
+    const handleMenu = () => {
+      store.commit("collapseMenu")
+    }
+    return {
+      handleMenu
+    }
   }
 }
 </script>
