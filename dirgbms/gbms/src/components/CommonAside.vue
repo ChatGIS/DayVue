@@ -13,7 +13,7 @@
     <h3 v-show="isCollapse">后台</h3>
     <el-menu-item :index="item.id" v-for="item in menuNoChildren"
                   :key = 'item.id'
-                  @click="clickMenu(item.path)">
+                  @click="clickMenu(item)">
       <el-icon v-if="item.icon == 'home-filled'"><home-filled /></el-icon>
       <el-icon v-if="item.icon == 'user'"><user/></el-icon>
       <el-icon v-if="item.icon == 'data-analysis'"><data-analysis/></el-icon>
@@ -82,20 +82,21 @@ export default {
       },
       {
         id: '2',
+        path: '/website',
+        name: 'website',
+        label: '网站管理',
+        icon: 'data-analysis',
+        url: 'WebsiteManage/WebsiteManage'
+      },
+      {
+        id: '3',
         path: '/user',
         name: 'user',
         label: '用户管理',
         icon: 'user',
         url: 'MallManage/MallManage'
       },
-      {
-        id: '3',
-        path: '/web',
-        name: 'web',
-        label: '网站管理',
-        icon: 'data-analysis',
-        url: 'UserManage/UserManage'
-      },
+
       {
         id: '4',
         label: '其他',
@@ -135,11 +136,11 @@ export default {
       console.log(key);
     }
 
-    const clickMenu = (path) => {
+    // 菜单点击，通过name匹配组件
+    const clickMenu = (item) => {
       router.push({
-        name: path
+        name: item.name
       })
-      console.log(path);
     }
 
 
