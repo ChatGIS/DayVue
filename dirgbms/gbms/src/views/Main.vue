@@ -3,7 +3,7 @@
       <common-aside></common-aside>
       <el-container>
         <el-header><common-header></common-header></el-header>
-        <el-main><router-view/></el-main>
+        <router-view/>
       </el-container>
     </el-container>
 </template>
@@ -38,7 +38,7 @@ export default {
     background-color: #e9eef3;
     color: var(--el-text-color-primary);
     text-align: center;
-    line-height: 160px;
+    //line-height: 160px;
   }
 
   .el-footer {
