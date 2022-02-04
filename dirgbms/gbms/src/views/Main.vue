@@ -3,7 +3,8 @@
       <common-aside></common-aside>
       <el-container>
         <el-header><common-header></common-header></el-header>
-        <router-view/>
+        <div class="content"> <router-view/></div>
+
       </el-container>
     </el-container>
 </template>
@@ -22,6 +23,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .content {
+    width: auto;
+    height: 100%;
+    padding: 10px;
+    overflow-y: scroll;
+    box-sizing: border-box;
+  }
   .el-container {
     height: 100vh;
     margin: 0px;
