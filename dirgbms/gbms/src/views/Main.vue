@@ -29,6 +29,7 @@ export default {
     padding: 10px;
     overflow-y: scroll;
     box-sizing: border-box;
+    background-color:#f0f0f0;
   }
   .el-container {
     height: 100vh;

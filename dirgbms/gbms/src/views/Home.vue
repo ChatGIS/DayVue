@@ -15,6 +15,13 @@
         </div>
       </el-card>
     </el-col>
+    <el-col :span="16" style="background-color: red">
+      <el-row :gutter="20" style="height: 300px">
+        <el-col :span="8" style="background-color: green; padding: 10px"></el-col>
+        <el-col :span="8" style="background-color: green; padding: 10px"></el-col>
+        <el-col :span="8" style="background-color: green; padding: 10px"></el-col>
+      </el-row>
+    </el-col>
   </el-row>
 </template>
 
