@@ -1,36 +1,68 @@
 <template>
   <div class="login-container">
-    <el-form ref="formRef" :model="form" class="login-form">
+    <el-form ref="formRef" :model="form" class="login-form" :rules="rules">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
-      <el-form-item>
+      <el-form-item prop="name">
         <el-icon :size="20" class="svg-container">
-          <edit />
+          <user />
         </el-icon>
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <el-icon :size="20" class="svg-container">
-          <edit />
+          <lock />
         </el-icon>
         <el-input v-model="form.password"></el-input>
       </el-form-item>
-      <el-button type="primary" class="login-button">登录</el-button>
+      <el-button type="primary" class="login-button" @click="handleLogin">登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script setup>
-/*export default {
-  name: "index"
-}*/
-  import { ref } from 'vue'
-  import { Edit } from '@element-plus/icons-vue'
-  const form = ref({
-    name: "aaa",
-    password: "123456"
+  import {reactive, ref} from 'vue'
+  import { Edit, User, Lock } from '@element-plus/icons-vue'
+
+  const formRef = ref(null);
+  const form = reactive({
+    name: "",
+    password: ""
   })
+
+  const rules = reactive({
+    name: [
+      {
+        required: true,
+        message: '请输入用户名',
+        trigger: 'blur',
+      },
+      {
+        min: 3,
+        max: 5,
+        message: 'Length should be 3 to 5',
+        trigger: 'blur',
+      }
+    ],
+    password: [
+      {
+        required: true,
+        message: '请输入密码',
+        trigger: 'blur',
+      }
+    ]
+  })
+  const handleLogin = () => {
+    formRef.value.validate((valid) => {
+      if (valid) {
+        console.log('submit!')
+      } else {
+        console.log('error submit:登录验证不通过!')
+        return false
+      }
+    })
+  }
 </script>
 
 <style lang="scss" scoped>
