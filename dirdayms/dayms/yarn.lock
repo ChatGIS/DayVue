@@ -944,12 +944,7 @@
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
 
-"@element-plus/icons-vue@^0.2.6":
-  version "0.2.7"
-  resolved "https://registry.npmmirror.com/@element-plus/icons-vue/-/icons-vue-0.2.7.tgz"
-  integrity sha512-S8kDbfVaWkQvbUYQE1ui448tzaHfUvyESCep9J6uPRlViyQPXjdIfwLBhV6AmQSOfFS8rL+xehJGhvzPXLrSBg==
-
-"@element-plus/icons-vue@^0.2.7":
+"@element-plus/icons-vue@^0.2.6", "@element-plus/icons-vue@^0.2.7":
   version "0.2.7"
   resolved "https://registry.npmmirror.com/@element-plus/icons-vue/-/icons-vue-0.2.7.tgz#c0b75363098bf1fba414e18706604bfe5057ae1b"
   integrity sha512-S8kDbfVaWkQvbUYQE1ui448tzaHfUvyESCep9J6uPRlViyQPXjdIfwLBhV6AmQSOfFS8rL+xehJGhvzPXLrSBg==
@@ -2024,6 +2019,13 @@ aws4@^1.8.0:
   version "1.11.0"
   resolved "https://registry.npmmirror.com/aws4/-/aws4-1.11.0.tgz"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
+
+axios@^0.26.0:
+  version "0.26.0"
+  resolved "https://registry.npmmirror.com/axios/-/axios-0.26.0.tgz#9a318f1c69ec108f8cd5f3c3d390366635e13928"
+  integrity sha512-lKoGLMYtHvFrPVt3r+RBMp9nh34N0M8zEfCWqdWZx6phynIEhQqAdydpyBAAG211zlhX9Rgu08cOamy6XjE5Og==
+  dependencies:
+    follow-redirects "^1.14.8"
 
 babel-loader@^8.1.0:
   version "8.2.3"
@@ -3918,7 +3920,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.14.8:
   version "1.14.8"
   resolved "https://registry.npmmirror.com/follow-redirects/-/follow-redirects-1.14.8.tgz"
   integrity sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==
