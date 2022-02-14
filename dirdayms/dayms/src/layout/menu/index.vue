@@ -1,6 +1,6 @@
 <template>
   <el-menu
-      :active-text-color="variables.menuActiveText"
+      active-text-color="#ffd04b"
       :background-color="variables.menuBg"
       class="el-menu-vertical-demo"
       :default-active=defaultActive
@@ -8,15 +8,23 @@
       unique-opened
       router
   >
-    <el-sub-menu :index="item.id" v-for="item in menusList" :key="item.id">
+    <el-sub-menu :index="item.id" v-for="(item, index) in menusList" :key="item.id">
       <template #title>
-        <el-icon><location /></el-icon>
+        <el-icon>
+          <component :is = "iconList[index]"></component>
+        </el-icon>
         <span>{{item.authName}}</span>
       </template>
       <el-menu-item :index="'/' + it.path" v-for="it in item.children"
                     :key="it.id"
                     @click="savePath(it.path)">
-        {{it.authName}}
+        <template #title>
+          <el-icon>
+            <component :is = "icon"></component>
+          </el-icon>
+          <span> {{it.authName}}</span>
+        </template>
+
       </el-menu-item>
     </el-sub-menu>
   </el-menu>
@@ -27,6 +35,9 @@ import { menuList } from '@/api/menu'
 import {ref} from "vue";
 import variables from '@/styles/variables.scss'
 
+// 定义菜单图标
+const iconList = ref(['user', 'setting', 'shop', 'tickets', 'pie-chart'])
+const icon = ref('menu')
 const defaultActive = ref(sessionStorage.getItem('path') || '/users')
 const menusList = ref([])
 const initMenuList = async () => {

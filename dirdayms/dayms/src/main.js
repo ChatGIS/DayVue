@@ -4,5 +4,11 @@ import router from './router'
 import store from './store'
 import '@/styles/index.scss'
 import '@/router/permission'
+import * as ELIcons from '@element-plus/icons-vue'
 
-createApp(App).use(store).use(router).mount('#app')
+const app = createApp(App)
+for(const iconName in ELIcons) {
+    app.component(iconName, ELIcons[iconName])
+}
+
+app.use(store).use(router).mount('#app')
