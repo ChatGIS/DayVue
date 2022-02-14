@@ -10,5 +10,28 @@ module.exports = {
         config.plugins.push(Components({
             resolvers: [ElementPlusResolver()],
         }))
+    },
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'https://lianghj.top:8888/api/private/v1',
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            }
+        }
+    },
+    css: {
+        loaderOptions: {
+            sass: {
+                prependData:   // 8版本用prependData:
+                    `
+                      @import "@/styles/variables.scss";  // scss文件地址
+                      @import "@/styles/mixin.scss";     // scss文件地址
+                    `
+            }
+        }
     }
 }

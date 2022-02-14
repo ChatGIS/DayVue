@@ -8,7 +8,7 @@
         <el-icon :size="20" class="svg-container">
           <user />
         </el-icon>
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-icon :size="20" class="svg-container">
@@ -24,15 +24,17 @@
 <script setup>
   import {reactive, ref} from 'vue'
   import { Edit, User, Lock } from '@element-plus/icons-vue'
+  import {useStore} from 'vuex'
 
+  const store = useStore()
   const formRef = ref(null);
-  const form = reactive({
-    name: "",
-    password: ""
+  const form = ref({
+    username: "admin",
+    password: "123456"
   })
 
   const rules = reactive({
-    name: [
+    username: [
       {
         required: true,
         message: '请输入用户名',
@@ -54,9 +56,9 @@
     ]
   })
   const handleLogin = () => {
-    formRef.value.validate((valid) => {
+    formRef.value.validate(async (valid) => {
       if (valid) {
-        console.log('submit!')
+        store.dispatch('app/login', form.value)
       } else {
         console.log('error submit:登录验证不通过!')
         return false
