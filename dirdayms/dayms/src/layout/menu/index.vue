@@ -38,7 +38,7 @@ import variables from '@/styles/variables.scss'
 // 定义菜单图标
 const iconList = ref(['user', 'setting', 'shop', 'tickets', 'pie-chart'])
 const icon = ref('menu')
-const defaultActive = ref(sessionStorage.getItem('path') || '/users')
+const defaultActive = ref(sessionStorage.getItem('path') || '/users.js')
 const menusList = ref([])
 const initMenuList = async () => {
   menusList.value = await menuList()
