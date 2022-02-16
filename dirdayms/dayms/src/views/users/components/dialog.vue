@@ -5,12 +5,12 @@
       width="40%"
       @close="handleClose"
   >
-    <el-form :ref=formRef :model=form label-width="70px" :rules="rules">
+    <el-form ref=formRef :model=form label-width="70px" :rules="rules">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="form.username"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password"></el-input>
+      <el-form-item label="密码" prop="password" v-if="dialogTitle === '添加用户'">
+        <el-input v-model="form.password" type="password"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="form.email"></el-input>
@@ -31,17 +31,10 @@
 </template>
 
 <script setup>
-import {defineEmits, ref, reactive, defineProps} from "vue";
+import { defineEmits, ref, reactive, defineProps, watch } from "vue";
+import { addUser, editUser } from "@/api/users";
+import { ElMessage } from 'element-plus'
 
-defineProps({
-  dialogTitle: {
-    type: String,
-    default: '',
-    required: true
-  }
-})
-
-const emits = defineEmits(['update:model-value'])
 const formRef = ref(null)
 const form = ref({
   username: '',
@@ -49,6 +42,27 @@ const form = ref({
   email: '',
   mobile: ''
 })
+const props = defineProps({
+  dialogTitle: {
+    type: String,
+    default: '',
+    required: true
+  },
+  dialogTableValue: {
+    type: Object,
+    default: () => {}
+  }
+})
+
+watch(
+    () => props.dialogTableValue,
+    () => {
+      form.value = props.dialogTableValue
+    },
+    {deep: true, immediate: true})
+
+const emits = defineEmits(['update:model-value', 'initUserList'])
+
 const rules = reactive({
   username: [
     {
@@ -89,7 +103,22 @@ const handleClose = () => {
   emits('update:model-value', false)
 }
 const handleConfirm = () => {
-  handleClose()
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      props.dialogTitle === '添加用户'
+          ? await addUser(form.value)
+          : await editUser(form.value)
+      ElMessage({
+        message: '成功',
+        type: 'success',
+      })
+      emits('initUserList')
+      handleClose()
+    } else {
+      console.log('error submit!')
+      return false
+    }
+  })
 }
 </script>
 

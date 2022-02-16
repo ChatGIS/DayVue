@@ -18,10 +18,10 @@
         <template v-slot="{ row }" v-else-if="item.prop === 'create_time'">
           {{$filters.filterTimes(row.create_time)}}
         </template>
-        <template #default v-else-if="item.prop === 'action'">
-          <el-button type="primary" size="small" :icon="Edit"></el-button>
+        <template #default="{ row }" v-else-if="item.prop === 'action'">
+          <el-button type="primary" size="small" :icon="Edit" @click="handleDialogValue(row)"></el-button>
           <el-button type="warning" size="small" :icon="Setting"></el-button>
-          <el-button type="danger" size="small" :icon="Delete"></el-button>
+          <el-button type="danger" size="small" :icon="Delete" @click="delUser(row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -39,15 +39,20 @@
     >
     </el-pagination>
   </el-card>
-  <Dialog v-model="dialogVisible" :dialogTitle="dialogTitle"></Dialog>
+  <Dialog v-model="dialogVisible"
+          :dialogTitle="dialogTitle"
+          v-if=dialogVisible
+          @initUserList="initGetUsersList"
+          :dialogTableValue="dialogTableValue"></Dialog>
 </template>
 
 <script setup>
 import { Search, Edit, Setting, Delete } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-import { getUser, changeUserState } from "@/api/users";
+import { getUser, changeUserState,deleteUser } from "@/api/users";
 import { options } from "./options";
 import Dialog from "./components/dialog"
+import { isNull } from "@/utils/filters";
 
 const queryForm = ref({
   query: '',
@@ -59,6 +64,7 @@ const tableData = ref([])
 
 const dialogVisible = ref(false)
 const dialogTitle = ref('')
+const dialogTableValue = ref({})
 
 const initGetUsersList = async () => {
   const res = await getUser(queryForm.value)
@@ -89,10 +95,40 @@ const changeState = async (info) => {
   })
 }
 
-// 添加用户弹框显隐
-const handleDialogValue = () => {
-  dialogTitle.value = '添加用户'
+// 添加/编辑用户弹框显隐
+const handleDialogValue = (row) => {
+  if (isNull(row)){
+    dialogTitle.value = '添加用户'
+    dialogTableValue.value = {}
+  } else {
+    dialogTitle.value = '编辑用户'
+    dialogTableValue.value = JSON.parse(JSON.stringify(row))
+  }
+
   dialogVisible.value = true
+}
+const delUser = (row) => {
+  ElMessageBox.confirm(
+    '确定要删除用户?',
+    'Warning',
+    {
+      confirmButtonText: '删除',
+      cancelButtonText: '不删除',
+      type: 'warning',
+    }
+  ).then(async () => {
+    await deleteUser(row.id)
+    initGetUsersList()
+    ElMessage({
+      type: 'success',
+      message: '删除成功',
+    })
+  }).catch(() => {
+    ElMessage({
+      type: 'info',
+      message: '取消删除',
+    })
+  })
 }
 </script>
 
@@ -100,5 +136,11 @@ const handleDialogValue = () => {
   .header {
     padding-bottom: 16px;
     box-sizing: border-box;
+  }
+
+  ::v-deep .el-pagination {
+    padding-top: 16px;
+    box-sizing: border-box;
+    justify-content: right;
   }
 </style>
