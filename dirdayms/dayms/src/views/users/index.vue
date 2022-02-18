@@ -7,13 +7,13 @@
           v-model="queryForm.query"></el-input>
       </el-col>
       <el-button type="primary" :icon="Search" @click="initGetUsersList">搜索</el-button>
-      <el-button type="primary" @click="handleDialogValue">添加用户</el-button>
+      <el-button type="primary" @click="handleDialogValue(null)">添加用户</el-button>
     </el-row>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column :width="item.width"
           :prop=item.prop :label=item.label v-for="(item, index) in options" :key="index">
         <template v-slot="{ row }" v-if="item.prop === 'mg_state'">
-          <el-switch v-model="row.mg_state" @change="changeState(row)"/>
+          <el-switch v-model="row.state" @change="changeState(row)"/>
         </template>
         <template v-slot="{ row }" v-else-if="item.prop === 'create_time'">
           {{$filters.filterTimes(row.create_time)}}
