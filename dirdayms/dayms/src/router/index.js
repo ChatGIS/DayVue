@@ -14,9 +14,9 @@ const routes = [
         component: () => import('@/views/users/index.vue')
       },
       {
-        path: 'categories',
-        name: 'categories',
-        component: () => import('@/views/categories/index.vue')
+        path: 'website',
+        name: 'website',
+        component: () => import('@/views/website/index.vue')
       },
       {
         path: 'goods',
