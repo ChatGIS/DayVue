@@ -14,7 +14,8 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'https://lianghj.top:8888/api/private/v1',
+                // target: 'https://lianghj.top:8888/api/private/v1',
+                target: 'http://daymsapi.com:3007/api',
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
