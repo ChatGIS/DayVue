@@ -15,7 +15,7 @@ module.exports = {
         proxy: {
             '/api': {
                 // target: 'https://lianghj.top:8888/api/private/v1',
-                target: 'http://daymsapi.com:3007/api',
+                target: 'http://127.0.0.1:3007/api',
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
