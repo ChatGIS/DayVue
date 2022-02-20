@@ -27,6 +27,12 @@ export default {
                     reject(err)
                 })
             })
+        },
+        // 退出
+        logout({ commit }) {
+            commit('setToken', '')
+            localStorage.clear()
+            router.replace('/login')
         }
     }
 }
