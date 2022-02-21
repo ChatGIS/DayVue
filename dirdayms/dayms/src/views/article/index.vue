@@ -2,16 +2,16 @@
   <el-card>
     <el-row :gutter="20" class="header">
       <el-col :span="7">
-        <el-input placeholder="名称"
+        <el-input :placeholder="$t('tableArticle.placeholder')"
           clearable
           v-model="queryForm.query"></el-input>
       </el-col>
-      <el-button type="primary" :icon="Search" @click="initGetUsersList">搜索</el-button>
-      <el-button type="primary" @click="handleDialogValue(null)">添加文章</el-button>
+      <el-button type="primary" :icon="Search" @click="initGetUsersList">{{ $t('tableArticle.search') }}</el-button>
+      <el-button type="primary" @click="handleDialogValue(null)">{{ $t('tableArticle.add') }}</el-button>
     </el-row>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column :width="item.width"
-          :prop=item.prop :label=item.label v-for="(item, index) in options" :key="index">
+          :prop=item.prop :label="$t(`tableArticle.${item.label}`)" v-for="(item, index) in options" :key="index">
         <template v-slot="{ row }" v-if="item.prop === 'create_time'">
           {{$filters.filterTimes(row.create_time)}}
         </template>

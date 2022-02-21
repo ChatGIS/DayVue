@@ -14,7 +14,7 @@
         <el-icon>
           <component :is = "iconList[index]"></component>
         </el-icon>
-        <span>{{item.authName}}</span>
+        <span>{{ $t(`menus.${item.path}`) }}</span>
       </template>
       <el-menu-item :index="'/' + it.path" v-for="it in item.children"
                     :key="it.id"
@@ -23,7 +23,7 @@
           <el-icon>
             <component :is = "icon"></component>
           </el-icon>
-          <span> {{it.authName}}</span>
+          <span> {{ $t(`menus.${it.path}`) }} </span>
         </template>
 
       </el-menu-item>

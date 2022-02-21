@@ -2,16 +2,16 @@
   <el-card>
     <el-row :gutter="20" class="header">
       <el-col :span="7">
-        <el-input placeholder="名称"
+        <el-input :placeholder="$t('tableUser.placeholder')"
           clearable
           v-model="queryForm.query"></el-input>
       </el-col>
-      <el-button type="primary" :icon="Search" @click="initGetUsersList">搜索</el-button>
-      <el-button type="primary" @click="handleDialogValue(null)">添加用户</el-button>
+      <el-button type="primary" :icon="Search" @click="initGetUsersList">{{ $t('tableUser.search') }}</el-button>
+      <el-button type="primary" @click="handleDialogValue(null)">{{ $t('tableUser.adduser') }}</el-button>
     </el-row>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column :width="item.width"
-          :prop=item.prop :label=item.label v-for="(item, index) in options" :key="index">
+          :prop=item.prop :label="$t(`tableUser.${item.label}`)" v-for="(item, index) in options" :key="index">
         <template v-slot="{ row }" v-if="item.prop === 'mg_state'">
           <el-switch v-model="row.state" @change="changeState(row)"/>
         </template>
@@ -53,7 +53,9 @@ import { getUser, changeUserState,deleteUser } from "@/api/users";
 import { options } from "./options";
 import Dialog from "./components/dialog"
 import { isNull } from "@/utils/filters";
+import { useI18n } from "vue-i18n";
 
+const i18n = useI18n()
 const queryForm = ref({
   query: '',
   pagenum: 1,
@@ -88,9 +90,9 @@ const handleCurrentChange = (pageNum) => {
 
 // 改变用户状态
 const changeState = async (info) => {
-  await changeUserState(info.id, info.mg_state)
+  await changeUserState(info.id, info.state)
   ElMessage({
-    message: '更新成功',
+    message: i18n.t('message.updeteSuccess'),
     type: 'success',
   })
 }
