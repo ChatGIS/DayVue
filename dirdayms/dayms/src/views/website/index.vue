@@ -12,7 +12,10 @@
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column :width="item.width"
           :prop=item.prop :label="$t(`tableWebsite.${item.label}`)" v-for="(item, index) in options" :key="index">
-        <template v-slot="{ row }" v-if="item.prop === 'mg_state'">
+        <template v-slot="{ row }" v-if="item.prop === 'url'">
+          <el-link type="primary" :href="row.url" target="_blank">{{row.url}}</el-link>
+        </template>
+        <template v-slot="{ row }" v-else-if="item.prop === 'mg_state'">
           <el-switch v-model="row.state" @change="changeState(row)"/>
         </template>
         <template v-slot="{ row }" v-else-if="item.prop === 'create_time'">
@@ -57,7 +60,7 @@ import { isNull } from "@/utils/filters";
 const queryForm = ref({
   query: '',
   pagenum: 1,
-  pagesize: 5
+  pagesize: 10
 })
 const total = ref(0)
 const tableData = ref([])

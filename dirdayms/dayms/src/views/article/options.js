@@ -5,8 +5,7 @@ export const options = [
     },
     {
         label: 'url',
-        prop: 'url',
-        width: 300
+        prop: 'url'
     },
     {
         label: 'state',

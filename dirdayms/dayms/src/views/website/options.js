@@ -6,15 +6,17 @@ export const options = [
     {
         label: 'url',
         prop: 'url',
-        width: 200
+
     },
     {
         label: 'type',
-        prop: 'type'
+        prop: 'type',
+        width: 100
     },
     {
         label: 'create_time',
-        prop: 'create_time'
+        prop: 'create_time',
+        width: 150
     },
     {
         label: 'action',
