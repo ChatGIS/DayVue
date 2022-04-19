@@ -6,12 +6,20 @@
 </script>
 
 <template>
-    <router-link to="/resource">资源</router-link>
-    <router-link to="/my">我的</router-link>
     <!--    <img alt="Vue logo" src="./assets/logo.png" />-->
     <!--  <HelloWorld1 msg="Hello Vue 3 + TypeScript + Vite" />-->
     <!--    <Resource></Resource>-->
-    <router-view></router-view>
+
+    <el-container>
+        <el-header id="header">
+            <router-link to="/resource">资源</router-link>
+            <router-link to="/my">我的</router-link>
+        </el-header>
+        <el-main>
+            <router-view></router-view>
+        </el-main>
+        <el-footer id="footer">Footer</el-footer>
+    </el-container>
 </template>
 
 <style>
@@ -22,5 +30,10 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+}
+
+#header,
+#footer {
+    background-color: #5ca8b5;
 }
 </style>

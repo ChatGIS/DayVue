@@ -1,42 +1,29 @@
 <template>
     <div class="common-layout">
-        <el-container>
-            <el-header id="header">Header</el-header>
-            <el-main>
-                <el-row>
-                    <el-col :span="4" v-for="(item, index) in tableData" :key="index">
-                        <el-card shadow="hover" class="webcard">
+        <el-row>
+            <el-col :span="4" v-for="(item, index) in tableData" :key="index">
+                <el-card shadow="hover" class="webcard">
+                    <el-row>
+                        <el-col :span="8">
+                            <el-avatar :size="50" :src="item.favicon" />
+                        </el-col>
+                        <el-col :span="16">
                             <el-row>
-                                <el-col :span="8">
-                                    <el-avatar :size="50" :src="item.favicon" />
-                                </el-col>
-                                <el-col :span="16">
-                                    <el-row>
-                                        <el-col
-                                            ><el-link
-                                                :href="item.url"
-                                                target="_blank"
-                                                :title="item.name"
-                                                >{{
-                                                    item.name.length < 8
-                                                        ? item.name
-                                                        : item.name.substring(0, 8)
-                                                }}</el-link
-                                            ></el-col
-                                        >
-                                    </el-row>
-                                    <el-row>
-                                        <el-tag class="mx-1" size="small">前端</el-tag>
-                                        <el-tag class="mx-1" size="small">JS</el-tag>
-                                    </el-row>
-                                </el-col>
+                                <el-col
+                                    ><el-link :href="item.url" target="_blank" :title="item.name">{{
+                                        item.name.length < 8 ? item.name : item.name.substring(0, 8)
+                                    }}</el-link></el-col
+                                >
                             </el-row>
-                        </el-card>
-                    </el-col>
-                </el-row>
-            </el-main>
-            <el-footer id="footer">Footer</el-footer>
-        </el-container>
+                            <el-row>
+                                <el-tag class="mx-1" size="small">前端</el-tag>
+                                <el-tag class="mx-1" size="small">JS</el-tag>
+                            </el-row>
+                        </el-col>
+                    </el-row>
+                </el-card>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -65,11 +52,6 @@ initGetUsersList()
 </script>
 
 <style scoped>
-#header,
-#footer {
-    background-color: #5ca8b5;
-}
-
 .el-avatar {
     --el-avatar-text-color: #fff;
     --el-avatar-bg-color: #f4f6f7;
