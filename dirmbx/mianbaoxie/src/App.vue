@@ -3,6 +3,7 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 // import HelloWorld1 from './components/HelloWorld1.vue'
 /*import Resource from './views/index.vue'*/
+import Menu from './components/menu/index.vue'
 </script>
 
 <template>
@@ -12,8 +13,9 @@
 
     <el-container>
         <el-header id="header">
-            <router-link to="/resource">资源</router-link>
-            <router-link to="/my">我的</router-link>
+            <!--            <router-link to="/resource">资源</router-link>
+            <router-link to="/my">我的</router-link>-->
+            <Menu></Menu>
         </el-header>
         <el-main>
             <router-view></router-view>
@@ -31,7 +33,6 @@
     color: #2c3e50;
 }
 
-#header,
 #footer {
     background-color: #5ca8b5;
 }
