@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getWebsite } from '../api/resource'
+import { getWebsite } from '../../api/resource'
 import { reactive, ref } from 'vue'
 
 const state = reactive({
