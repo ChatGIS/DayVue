@@ -10,9 +10,17 @@
                         <el-col :span="16">
                             <el-row>
                                 <el-col
-                                    ><el-link :href="item.url" target="_blank" :title="item.name">{{
-                                        item.name.length < 8 ? item.name : item.name.substring(0, 8)
-                                    }}</el-link></el-col
+                                    ><el-link
+                                        :href="item.url"
+                                        target="_blank"
+                                        :title="item.name"
+                                        @click="clickWeb(item.id)"
+                                        >{{
+                                            item.name.length < 8
+                                                ? item.name
+                                                : item.name.substring(0, 8)
+                                        }}</el-link
+                                    ></el-col
                                 >
                             </el-row>
                             <el-row>
@@ -28,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getWebsite } from '../../api/resource'
+import { getWebsite, clickWebsite } from '../../api/resource'
 import { reactive, ref } from 'vue'
 
 const state = reactive({
@@ -49,6 +57,11 @@ const initGetUsersList = async () => {
 }
 
 initGetUsersList()
+
+const clickWeb = (id) => {
+    debugger
+    clickWebsite(id)
+}
 </script>
 
 <style scoped>

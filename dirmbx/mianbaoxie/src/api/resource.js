@@ -1,9 +1,16 @@
-import request from "./request";
+import request from './request'
 
 export const getWebsite = (params) => {
     return request({
         url: 'websites',
-        params
+        params,
+    })
+}
+
+export const clickWebsite = (id) => {
+    return request({
+        url: `websitesclick/${id}`,
+        method: 'put',
     })
 }
 
@@ -11,7 +18,7 @@ export const addWebsite = (data) => {
     return request({
         url: 'websites',
         method: 'post',
-        data
+        data,
     })
 }
 
@@ -19,13 +26,13 @@ export const editWebsite = (data) => {
     return request({
         url: `websites/${data.id}`,
         method: 'put',
-        data
+        data,
     })
 }
 
 export const deleteWebsite = (id) => {
     return request({
         url: `websites/${id}`,
-        method: 'delete'
+        method: 'delete',
     })
 }
