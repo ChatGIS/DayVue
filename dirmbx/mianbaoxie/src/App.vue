@@ -50,4 +50,8 @@ import Type from './components/type/index.vue'
 .el-main {
     background-color: #f4f5f5;
 }
+
+.el-menu--horizontal {
+    border-width: 0;
+}
 </style>
