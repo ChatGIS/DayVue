@@ -12,6 +12,7 @@ declare module 'vue' {
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
@@ -25,6 +26,7 @@ declare module 'vue' {
     HelloWorld1: typeof import('./src/components/HelloWorld1.vue')['default']
     Logo: typeof import('./src/components/logo/index.vue')['default']
     Menu: typeof import('./src/components/menu/index.vue')['default']
+    Search: typeof import('./src/components/search/index.vue')['default']
     Subheader: typeof import('./src/components/subheader/index.vue')['default']
     Type: typeof import('./src/components/type/index.vue')['default']
   }

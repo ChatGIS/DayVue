@@ -6,6 +6,7 @@
 import Logo from './components/logo/index.vue'
 import Menu from './components/menu/index.vue'
 import Type from './components/type/index.vue'
+import Search from './components/search/index.vue'
 </script>
 
 <template>
@@ -18,6 +19,7 @@ import Type from './components/type/index.vue'
             <div class="header-container">
                 <Logo></Logo>
                 <Menu></Menu>
+                <Search></Search>
             </div>
         </el-header>
         <Type></Type>
