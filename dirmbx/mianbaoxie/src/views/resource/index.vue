@@ -1,5 +1,6 @@
 <template>
     <div class="common-layout">
+        <Type @selectedType="getTypeSelected"></Type>
         <el-row>
             <el-col :span="4" v-for="(item, index) in tableData" :key="index">
                 <el-card shadow="hover" class="webcard">
@@ -36,6 +37,7 @@
 </template>
 
 <script lang="ts" setup>
+import Type from '../../components/type/index.vue'
 import { getWebsite, clickWebsite } from '../../api/resource'
 import { reactive, ref } from 'vue'
 
@@ -46,11 +48,13 @@ const state = reactive({
 })
 const tableData = ref([])
 const test = ref('aaa')
-const initGetUsersList = async () => {
+const initGetUsersList = async (typeSelected) => {
+    let type = typeSelected ? typeSelected : 0
     const par = {
         query: '',
         pagenum: 1,
         pagesize: 100,
+        type: type,
     }
     const res = await getWebsite(par)
     tableData.value = res.websites
@@ -61,6 +65,10 @@ initGetUsersList()
 const clickWeb = (id) => {
     debugger
     clickWebsite(id)
+}
+// 获取类型值
+const getTypeSelected = (val) => {
+    initGetUsersList(val)
 }
 </script>
 

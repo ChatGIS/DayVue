@@ -1,14 +1,3 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-// import HelloWorld1 from './components/HelloWorld1.vue'
-/*import Resource from './views/index.vue'*/
-import Logo from './components/logo/index.vue'
-import Menu from './components/menu/index.vue'
-import Type from './components/type/index.vue'
-import Search from './components/search/index.vue'
-</script>
-
 <template>
     <!--    <img alt="Vue logo" src="./assets/logo.png" />-->
     <!--  <HelloWorld1 msg="Hello Vue 3 + TypeScript + Vite" />-->
@@ -22,14 +11,17 @@ import Search from './components/search/index.vue'
                 <Search></Search>
             </div>
         </el-header>
-        <Type></Type>
         <el-main>
             <router-view></router-view>
         </el-main>
-        <el-footer id="footer">Footer</el-footer>
+        <el-footer id="footer">关于本站</el-footer>
     </el-container>
 </template>
-
+<script setup lang="ts">
+import Logo from './components/logo/index.vue'
+import Menu from './components/menu/index.vue'
+import Search from './components/search/index.vue'
+</script>
 <style>
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -46,14 +38,18 @@ import Search from './components/search/index.vue'
 }
 
 #footer {
-    background-color: #5ca8b5;
+    background-color: #ffffff;
 }
 
 .el-main {
+    min-height: 593px;
     background-color: #f4f5f5;
 }
 
 .el-menu--horizontal {
     border-width: 0;
+}
+.el-main {
+    --el-main-padding: 0px;
 }
 </style>
