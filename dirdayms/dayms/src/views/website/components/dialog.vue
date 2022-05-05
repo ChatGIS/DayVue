@@ -12,8 +12,23 @@
       <el-form-item label="url" prop="url">
         <el-input v-model="form.url"></el-input>
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-input v-model="form.type"></el-input>
+      <el-form-item label="标签" prop="tag">
+        <el-select
+            v-model="selectedTags"
+            multiple
+            placeholder="Select"
+            style="width: 400px"
+        >
+          <el-option
+              v-for="item in allTags"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="描述">
+        <el-input v-model="form.description" type="textarea" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -31,12 +46,17 @@
 import { defineEmits, ref, reactive, defineProps, watch } from "vue";
 import { addWebsite, editWebsite } from "@/api/website";
 import { ElMessage } from 'element-plus'
-
+import { getTags } from "@/api/tag";
+// 编辑时，已存在的标签
+const selectedTags = ref([])
+// 所有标签，用于生成选择框选项
+const allTags = ref([])
 const formRef = ref(null)
 const form = ref({
   name: '',
   url: '',
-  type: ''
+  tags:'',
+  description:''
 })
 const props = defineProps({
   dialogTitle: {
@@ -54,8 +74,20 @@ watch(
     () => props.dialogTableValue,
     () => {
       form.value = props.dialogTableValue
+      // 将字符串（例如"1,2"）转换成整数数组（例如：[1,2]）
+      let tags = []
+      if(form.value.tags_id){
+        let tagsStrArr = form.value.tags_id.split(",");
+        for(let i = 0; i < tagsStrArr.length; i++){
+          tags.push(parseInt(tagsStrArr[i]))
+        }
+      }
+
+      selectedTags.value = tags
+      console.log(form.value.tags_id)
     },
-    {deep: true, immediate: true})
+    {deep: true, immediate: true}
+)
 
 const emits = defineEmits(['update:model-value', 'initUserList'])
 
@@ -76,9 +108,9 @@ const rules = reactive({
   ],
   type: [
     {
-      required: true,
-      message: 'Please input Activity name',
-      trigger: 'blur',
+      required: false,
+      message: '请选择标签',
+      trigger: 'change',
     }
   ]
 })
@@ -88,7 +120,8 @@ const handleClose = () => {
 }
 const handleConfirm = () => {
   formRef.value.validate(async (valid) => {
-    if (valid) {
+    if (valid) {debugger
+      form.value.tags = selectedTags.value
       props.dialogTitle === '添加网站'
           ? await addWebsite(form.value)
           : await editWebsite(form.value)
@@ -104,6 +137,19 @@ const handleConfirm = () => {
     }
   })
 }
+
+// 获取标签的条件
+const queryForm = ref({
+  query: '',
+  pagenum: 1,
+  pagesize: 100
+})
+
+const getTag = async () => {
+  const res = await getTags(queryForm.value)
+  allTags.value = res.tags
+}
+getTag()
 </script>
 
 <style lang="scss" scoped>

@@ -18,8 +18,15 @@
         <template v-slot="{ row }" v-else-if="item.prop === 'mg_state'">
           <el-switch v-model="row.state" @change="changeState(row)"/>
         </template>
+        <template v-slot="{ row }" v-else-if="item.prop === 'tags_name'">
+          <el-tag v-for="item in row.tags_name.split(',')" v-if="row.tags_name != null">{{item}}</el-tag>
+          <el-tag v-else type="danger">无</el-tag>
+        </template>
         <template v-slot="{ row }" v-else-if="item.prop === 'create_time'">
           {{$filters.filterTimes(row.create_time)}}
+        </template>
+        <template v-slot="{ row }" v-else-if="item.prop === 'update_time'">
+          {{$filters.filterTimes(row.update_time)}}
         </template>
         <template #default="{ row }" v-else-if="item.prop === 'action'">
           <el-button type="primary" size="small" :icon="Edit" @click="handleDialogValue(row)"></el-button>
@@ -46,7 +53,8 @@
           :dialogTitle="dialogTitle"
           v-if=dialogVisible
           @initUserList="initGetUsersList"
-          :dialogTableValue="dialogTableValue"></Dialog>
+          :dialogTableValue="dialogTableValue"
+  :selectedTagIds="selectedTagIds"></Dialog>
 </template>
 
 <script setup>
@@ -60,7 +68,8 @@ import { isNull } from "@/utils/filters";
 const queryForm = ref({
   query: '',
   pagenum: 1,
-  pagesize: 10
+  pagesize: 10,
+  type: 0
 })
 const total = ref(0)
 const tableData = ref([])
