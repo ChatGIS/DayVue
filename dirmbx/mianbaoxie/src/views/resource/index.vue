@@ -49,12 +49,12 @@ const state = reactive({
 const tableData = ref([])
 const test = ref('aaa')
 const initGetUsersList = async (typeSelected) => {
-    let type = typeSelected ? typeSelected : 0
+    let tags = typeSelected ? typeSelected : []
     const par = {
         query: '',
         pagenum: 1,
         pagesize: 100,
-        type: type,
+        tags: tags,
     }
     const res = await getWebsite(par)
     tableData.value = res.websites
@@ -68,6 +68,9 @@ const clickWeb = (id) => {
 }
 // 获取类型值
 const getTypeSelected = (val) => {
+    if (val.length == 1 && val.includes(0)) {
+        val = []
+    }
     initGetUsersList(val)
 }
 </script>
