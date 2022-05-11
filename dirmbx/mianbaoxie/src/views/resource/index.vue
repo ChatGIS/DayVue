@@ -1,8 +1,8 @@
 <template>
     <div class="common-layout">
-        <Type @selectedType="getTypeSelected"></Type>
+        <Type @selectedType="getTagSelected"></Type>
         <el-row>
-            <el-col :span="4" v-for="(item, index) in tableData" :key="index">
+            <el-col :span="4" v-for="(item, index) in websiteData" :key="index">
                 <el-card shadow="hover" class="webcard">
                     <el-row>
                         <el-col :span="8">
@@ -33,6 +33,17 @@
                 </el-card>
             </el-col>
         </el-row>
+        <el-pagination
+            v-model:currentPage="pageParam.pagenum"
+            v-model:page-size="pageParam.pagesize"
+            :small="small"
+            :disabled="disabled"
+            :background="background"
+            layout="prev, pager, next, jumper"
+            :hide-on-single-page="isSinglePage"
+            :total="total"
+            @current-change="handleCurrentChange"
+        />
     </div>
 </template>
 
@@ -41,37 +52,48 @@ import Type from '../../components/type/index.vue'
 import { getWebsite, clickWebsite } from '../../api/resource'
 import { reactive, ref } from 'vue'
 
-const state = reactive({
-    circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-    squareUrl: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
-    sizeList: ['small', '', 'large'] as const,
+// 查询结果总数
+const total = ref(0)
+// 分页查询条件
+const pageParam = ref({
+    query: '',
+    pagenum: 1,
+    pagesize: 30,
+    tags: [0],
 })
-const tableData = ref([])
-const test = ref('aaa')
-const initGetUsersList = async (typeSelected) => {
-    let tags = typeSelected ? typeSelected : []
-    const par = {
-        query: '',
-        pagenum: 1,
-        pagesize: 100,
-        tags: tags,
-    }
-    const res = await getWebsite(par)
-    tableData.value = res.websites
+// 查询结果是否只有一页，是则不显示分页组件
+const isSinglePage = ref(true)
+// 查询结果
+const websiteData = ref([])
+// 查询网站
+const initGetWebsitesList = async (tagSelected) => {
+    let tags = tagSelected ? tagSelected : []
+    pageParam.value.tags = tags
+    const res = await getWebsite(pageParam.value)
+    total.value = res.total
+    websiteData.value = res.websites
+}
+// 初始化查询
+initGetWebsitesList([])
+
+// 选择页码
+const handleCurrentChange = (val: number) => {
+    pageParam.value.pagenum = val
+    initGetWebsitesList([])
 }
 
-initGetUsersList()
-
-const clickWeb = (id) => {
+// 点击网站
+const clickWeb = (id: number) => {
     debugger
     clickWebsite(id)
 }
-// 获取类型值
-const getTypeSelected = (val) => {
+
+// 获取标签值
+const getTagSelected = (val) => {
     if (val.length == 1 && val.includes(0)) {
         val = []
     }
-    initGetUsersList(val)
+    initGetWebsitesList(val)
 }
 </script>
 
