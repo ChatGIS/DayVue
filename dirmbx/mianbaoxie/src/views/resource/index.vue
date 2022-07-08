@@ -2,7 +2,7 @@
     <div class="common-layout">
         <Type @selectedType="getTagSelected"></Type>
         <el-row>
-            <el-col :span="4" v-for="(item, index) in websiteData" :key="index">
+            <el-col :span="4" v-for="(item:any, index) in websiteData" :key="index">
                 <el-card shadow="hover" class="webcard">
                     <el-row>
                         <el-col :span="8">
@@ -36,9 +36,6 @@
         <el-pagination
             v-model:currentPage="pageParam.pagenum"
             v-model:page-size="pageParam.pagesize"
-            :small="small"
-            :disabled="disabled"
-            :background="background"
             layout="prev, pager, next, jumper"
             :hide-on-single-page="isSinglePage"
             :total="total"
@@ -49,7 +46,7 @@
 
 <script lang="ts" setup>
 import Type from '../../components/type/index.vue'
-import { getWebsite, clickWebsite } from '../../api/resource'
+import { getWebsite, clickWebsite } from '../../api/resource.js'
 import { reactive, ref } from 'vue'
 
 // 查询结果总数
@@ -66,7 +63,7 @@ const isSinglePage = ref(true)
 // 查询结果
 const websiteData = ref([])
 // 查询网站
-const initGetWebsitesList = async (tagSelected) => {
+const initGetWebsitesList = async (tagSelected: any) => {
     let tags = tagSelected ? tagSelected : []
     pageParam.value.tags = tags
     const res = await getWebsite(pageParam.value)
@@ -89,7 +86,7 @@ const clickWeb = (id: number) => {
 }
 
 // 获取标签值
-const getTagSelected = (val) => {
+const getTagSelected = (val: any) => {
     if (val.length == 1 && val.includes(0)) {
         val = []
     }
