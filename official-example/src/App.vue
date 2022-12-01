@@ -3,6 +3,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import TemplateSyntax from './components/TemplateSyntax.vue'
 import ReactivityFundamentals from './components/ReactivityFundamentals.vue'
+import ComputedProperties from './components/ComputedProperties.vue'
 
 </script>
 
@@ -14,7 +15,7 @@ import ReactivityFundamentals from './components/ReactivityFundamentals.vue'
       <HelloWorld msg="You did it!" />
     </div> -->
     <div>
-      <ReactivityFundamentals></ReactivityFundamentals>
+      <ComputedProperties></ComputedProperties>
     </div>
   </header>
 
