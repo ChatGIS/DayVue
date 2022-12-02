@@ -4,6 +4,7 @@ import TheWelcome from './components/TheWelcome.vue'
 import TemplateSyntax from './components/TemplateSyntax.vue'
 import ReactivityFundamentals from './components/ReactivityFundamentals.vue'
 import ComputedProperties from './components/ComputedProperties.vue'
+import ClassAndStyleBindings from './components/ClassAndStyleBindings.vue'
 
 </script>
 
@@ -15,7 +16,7 @@ import ComputedProperties from './components/ComputedProperties.vue'
       <HelloWorld msg="You did it!" />
     </div> -->
     <div>
-      <ComputedProperties></ComputedProperties>
+      <ClassAndStyleBindings></ClassAndStyleBindings>
     </div>
   </header>
 
