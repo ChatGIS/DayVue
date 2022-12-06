@@ -5,6 +5,7 @@ import TemplateSyntax from './components/TemplateSyntax.vue'
 import ReactivityFundamentals from './components/ReactivityFundamentals.vue'
 import ComputedProperties from './components/ComputedProperties.vue'
 import ClassAndStyleBindings from './components/ClassAndStyleBindings.vue'
+import ConditionalRendering from './components/ConditionalRendering.vue'
 
 </script>
 
@@ -16,7 +17,7 @@ import ClassAndStyleBindings from './components/ClassAndStyleBindings.vue'
       <HelloWorld msg="You did it!" />
     </div> -->
     <div>
-      <ClassAndStyleBindings></ClassAndStyleBindings>
+      <ConditionalRendering></ConditionalRendering>
     </div>
   </header>
 
