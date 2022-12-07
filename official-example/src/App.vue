@@ -6,6 +6,7 @@ import ReactivityFundamentals from './components/ReactivityFundamentals.vue'
 import ComputedProperties from './components/ComputedProperties.vue'
 import ClassAndStyleBindings from './components/ClassAndStyleBindings.vue'
 import ConditionalRendering from './components/ConditionalRendering.vue'
+import ListRendering from './components/ListRendering.vue'
 
 </script>
 
@@ -17,7 +18,7 @@ import ConditionalRendering from './components/ConditionalRendering.vue'
       <HelloWorld msg="You did it!" />
     </div> -->
     <div>
-      <ConditionalRendering></ConditionalRendering>
+      <ListRendering></ListRendering>
     </div>
   </header>
 
